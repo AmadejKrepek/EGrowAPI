@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.31911.260
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EGrowAPI", "EGrowAPI.csproj", "{4288FDEA-3AC3-4A8D-8D47-2B62CB9A1D0E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EGrowAPIUnitTest", "..\EGrowAPIUnitTest\EGrowAPIUnitTest.csproj", "{A55219DA-FE64-41C1-8A57-E746D189F169}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{4288FDEA-3AC3-4A8D-8D47-2B62CB9A1D0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4288FDEA-3AC3-4A8D-8D47-2B62CB9A1D0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4288FDEA-3AC3-4A8D-8D47-2B62CB9A1D0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A55219DA-FE64-41C1-8A57-E746D189F169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A55219DA-FE64-41C1-8A57-E746D189F169}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A55219DA-FE64-41C1-8A57-E746D189F169}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A55219DA-FE64-41C1-8A57-E746D189F169}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
