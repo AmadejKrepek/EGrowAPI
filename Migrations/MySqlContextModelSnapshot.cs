@@ -19,31 +19,28 @@ namespace EGrowAPI.Migrations
 
             modelBuilder.Entity("Models.Account", b =>
                 {
-                    b.Property<byte[]>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                    b.Property<string>("UserGuid")
+                        .HasColumnType("varchar(767)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("UserGuid");
 
                     b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("Models.Device", b =>
                 {
-                    b.Property<byte[]>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                    b.Property<string>("DeviceGuid")
+                        .HasColumnType("varchar(767)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("DeviceGuid");
 
                     b.ToTable("Devices");
                 });
 
             modelBuilder.Entity("Models.SensorData", b =>
                 {
-                    b.Property<byte[]>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                    b.Property<string>("SensorDataGuid")
+                        .HasColumnType("varchar(767)");
 
                     b.Property<int>("AmbientHumidityPercentage")
                         .HasColumnType("int");
@@ -51,8 +48,8 @@ namespace EGrowAPI.Migrations
                     b.Property<double>("AmbientTemperatureCelsius")
                         .HasColumnType("double");
 
-                    b.Property<byte[]>("DeviceUserId")
-                        .HasColumnType("varbinary(16)");
+                    b.Property<string>("DeviceGuid")
+                        .HasColumnType("varchar(767)");
 
                     b.Property<int>("GrowthCm")
                         .HasColumnType("int");
@@ -75,21 +72,20 @@ namespace EGrowAPI.Migrations
                     b.Property<int>("UvIndex")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("SensorDataGuid");
 
-                    b.HasIndex("DeviceUserId");
+                    b.HasIndex("DeviceGuid");
 
                     b.ToTable("SensorData");
                 });
 
             modelBuilder.Entity("Models.User", b =>
                 {
-                    b.Property<byte[]>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                    b.Property<string>("UserGuid")
+                        .HasColumnType("varchar(767)");
 
-                    b.Property<byte[]>("AccountUserId")
-                        .HasColumnType("varbinary(16)");
+                    b.Property<string>("AccountUserGuid")
+                        .HasColumnType("varchar(767)");
 
                     b.Property<string>("Password")
                         .HasColumnType("text");
@@ -97,9 +93,9 @@ namespace EGrowAPI.Migrations
                     b.Property<string>("Username")
                         .HasColumnType("text");
 
-                    b.HasKey("UserId");
+                    b.HasKey("UserGuid");
 
-                    b.HasIndex("AccountUserId");
+                    b.HasIndex("AccountUserGuid");
 
                     b.ToTable("User");
                 });
@@ -108,7 +104,7 @@ namespace EGrowAPI.Migrations
                 {
                     b.HasOne("Models.Device", "Device")
                         .WithMany()
-                        .HasForeignKey("DeviceUserId");
+                        .HasForeignKey("DeviceGuid");
 
                     b.Navigation("Device");
                 });
@@ -117,7 +113,7 @@ namespace EGrowAPI.Migrations
                 {
                     b.HasOne("Models.Account", "Account")
                         .WithMany()
-                        .HasForeignKey("AccountUserId");
+                        .HasForeignKey("AccountUserGuid");
 
                     b.Navigation("Account");
                 });

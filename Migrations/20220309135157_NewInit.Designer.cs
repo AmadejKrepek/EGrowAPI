@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EGrowAPI.Migrations
 {
     [DbContext(typeof(MySqlContext))]
-    [Migration("20220309124441_MigrationName13")]
-    partial class MigrationName13
+    [Migration("20220309135157_NewInit")]
+    partial class NewInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,17 +19,39 @@ namespace EGrowAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.15");
 
+            modelBuilder.Entity("Models.Account", b =>
+                {
+                    b.Property<string>("UserGuid")
+                        .HasColumnType("varchar(767)");
+
+                    b.HasKey("UserGuid");
+
+                    b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("Models.Device", b =>
+                {
+                    b.Property<string>("DeviceGuid")
+                        .HasColumnType("varchar(767)");
+
+                    b.HasKey("DeviceGuid");
+
+                    b.ToTable("Devices");
+                });
+
             modelBuilder.Entity("Models.SensorData", b =>
                 {
-                    b.Property<byte[]>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                    b.Property<string>("SensorDataGuid")
+                        .HasColumnType("varchar(767)");
 
                     b.Property<int>("AmbientHumidityPercentage")
                         .HasColumnType("int");
 
                     b.Property<double>("AmbientTemperatureCelsius")
                         .HasColumnType("double");
+
+                    b.Property<string>("DeviceGuid")
+                        .HasColumnType("varchar(767)");
 
                     b.Property<int>("GrowthCm")
                         .HasColumnType("int");
@@ -52,16 +74,20 @@ namespace EGrowAPI.Migrations
                     b.Property<int>("UvIndex")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("SensorDataGuid");
+
+                    b.HasIndex("DeviceGuid");
 
                     b.ToTable("SensorData");
                 });
 
             modelBuilder.Entity("Models.User", b =>
                 {
-                    b.Property<byte[]>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                    b.Property<string>("UserGuid")
+                        .HasColumnType("varchar(767)");
+
+                    b.Property<string>("AccountUserGuid")
+                        .HasColumnType("varchar(767)");
 
                     b.Property<string>("Password")
                         .HasColumnType("text");
@@ -69,9 +95,29 @@ namespace EGrowAPI.Migrations
                     b.Property<string>("Username")
                         .HasColumnType("text");
 
-                    b.HasKey("UserId");
+                    b.HasKey("UserGuid");
+
+                    b.HasIndex("AccountUserGuid");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("Models.SensorData", b =>
+                {
+                    b.HasOne("Models.Device", "Device")
+                        .WithMany()
+                        .HasForeignKey("DeviceGuid");
+
+                    b.Navigation("Device");
+                });
+
+            modelBuilder.Entity("Models.User", b =>
+                {
+                    b.HasOne("Models.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountUserGuid");
+
+                    b.Navigation("Account");
                 });
 #pragma warning restore 612, 618
         }

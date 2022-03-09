@@ -8,7 +8,7 @@ namespace Models
     {
         [Key]
         public string UserGuid { get; set; }
-        List<Device> devices;
-        User user;
+        List<Device> Devices;
+        User User;
     }
 }
