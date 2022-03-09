@@ -9,6 +9,6 @@ namespace Models
         [Key]
         public string DeviceGuid { get; set; }
         List<SensorData> Sensors;
-        Account Account;
+        User User;
     }
 }

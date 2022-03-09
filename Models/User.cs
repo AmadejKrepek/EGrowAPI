@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Models
@@ -9,6 +10,6 @@ namespace Models
         public string UserGuid { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public Account Account { get; set; }
+        List<Device> Devices { get; set; }
     }
 }

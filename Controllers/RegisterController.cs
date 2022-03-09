@@ -24,7 +24,7 @@ namespace EGrowAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> Register(User user)
         {
-            var newEntity=_context.Users.Add(user);
+            var newEntity=_context.User.Add(user);
             try
             {
                 await _context.SaveChangesAsync();
