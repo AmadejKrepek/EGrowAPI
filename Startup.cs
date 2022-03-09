@@ -58,7 +58,7 @@ namespace EGrowAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.useCors();
+            app.UseCors();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
