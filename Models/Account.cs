@@ -7,7 +7,7 @@ namespace Models
     public class Account
     {
         [Key]
-        public Guid UserId { get; set; }
+        public string UserGuid { get; set; }
         List<Device> devices;
         User user;
     }

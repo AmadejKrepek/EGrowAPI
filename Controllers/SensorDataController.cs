@@ -30,7 +30,7 @@ namespace EGrowAPI.Controllers
 
         // GET: api/SensorData/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<SensorData>> GetSensorData(Guid id)
+        public async Task<ActionResult<SensorData>> GetSensorData(string id)
         {
             var sensorData = await _context.SensorData.FindAsync(id);
 
@@ -45,9 +45,9 @@ namespace EGrowAPI.Controllers
         // PUT: api/SensorData/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSensorData(Guid id, SensorData sensorData)
+        public async Task<IActionResult> PutSensorData(string id, SensorData sensorData)
         {
-            if (id != sensorData.Id)
+            if (id != sensorData.SensorDataGuid)
             {
                 return BadRequest();
             }
@@ -79,14 +79,28 @@ namespace EGrowAPI.Controllers
         public async Task<ActionResult<SensorData>> PostSensorData(SensorData sensorData)
         {
             _context.SensorData.Add(sensorData);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (SensorDataExists(sensorData.SensorDataGuid))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            return CreatedAtAction("GetSensorData", new { id = sensorData.Id }, sensorData);
+            return CreatedAtAction("GetSensorData", new { id = sensorData.SensorDataGuid }, sensorData);
         }
 
         // DELETE: api/SensorData/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSensorData(Guid id)
+        public async Task<IActionResult> DeleteSensorData(string id)
         {
             var sensorData = await _context.SensorData.FindAsync(id);
             if (sensorData == null)
@@ -100,9 +114,9 @@ namespace EGrowAPI.Controllers
             return NoContent();
         }
 
-        private bool SensorDataExists(Guid id)
+        private bool SensorDataExists(string id)
         {
-            return _context.SensorData.Any(e => e.Id == id);
+            return _context.SensorData.Any(e => e.SensorDataGuid == id);
         }
     }
 }

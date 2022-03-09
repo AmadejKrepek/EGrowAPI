@@ -6,6 +6,6 @@ namespace Models
     public class Growth
     {
         [Key]
-        public Guid Id { get; set; }
+        public string GrowthGuid { get; set; }
     }
 }

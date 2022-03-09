@@ -30,7 +30,7 @@ namespace EGrowAPI.Controllers
 
         // GET: api/Account/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Account>> GetAccount(Guid id)
+        public async Task<ActionResult<Account>> GetAccount(string id)
         {
             var account = await _context.Accounts.FindAsync(id);
 
@@ -45,9 +45,9 @@ namespace EGrowAPI.Controllers
         // PUT: api/Account/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAccount(Guid id, Account account)
+        public async Task<IActionResult> PutAccount(string id, Account account)
         {
-            if (id != account.UserId)
+            if (id != account.UserGuid)
             {
                 return BadRequest();
             }
@@ -79,14 +79,28 @@ namespace EGrowAPI.Controllers
         public async Task<ActionResult<Account>> PostAccount(Account account)
         {
             _context.Accounts.Add(account);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (AccountExists(account.UserGuid))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            return CreatedAtAction("GetAccount", new { id = account.UserId }, account);
+            return CreatedAtAction("GetAccount", new { id = account.UserGuid }, account);
         }
 
         // DELETE: api/Account/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAccount(Guid id)
+        public async Task<IActionResult> DeleteAccount(string id)
         {
             var account = await _context.Accounts.FindAsync(id);
             if (account == null)
@@ -100,9 +114,9 @@ namespace EGrowAPI.Controllers
             return NoContent();
         }
 
-        private bool AccountExists(Guid id)
+        private bool AccountExists(string id)
         {
-            return _context.Accounts.Any(e => e.UserId == id);
+            return _context.Accounts.Any(e => e.UserGuid == id);
         }
     }
 }

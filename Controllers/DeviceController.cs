@@ -30,7 +30,7 @@ namespace EGrowAPI.Controllers
 
         // GET: api/Device/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Device>> GetDevice(Guid id)
+        public async Task<ActionResult<Device>> GetDevice(string id)
         {
             var device = await _context.Devices.FindAsync(id);
 
@@ -45,9 +45,9 @@ namespace EGrowAPI.Controllers
         // PUT: api/Device/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDevice(Guid id, Device device)
+        public async Task<IActionResult> PutDevice(string id, Device device)
         {
-            if (id != device.UserId)
+            if (id != device.DeviceGuid)
             {
                 return BadRequest();
             }
@@ -79,14 +79,28 @@ namespace EGrowAPI.Controllers
         public async Task<ActionResult<Device>> PostDevice(Device device)
         {
             _context.Devices.Add(device);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (DeviceExists(device.DeviceGuid))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            return CreatedAtAction("GetDevice", new { id = device.UserId }, device);
+            return CreatedAtAction("GetDevice", new { id = device.DeviceGuid }, device);
         }
 
         // DELETE: api/Device/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDevice(Guid id)
+        public async Task<IActionResult> DeleteDevice(string id)
         {
             var device = await _context.Devices.FindAsync(id);
             if (device == null)
@@ -100,9 +114,9 @@ namespace EGrowAPI.Controllers
             return NoContent();
         }
 
-        private bool DeviceExists(Guid id)
+        private bool DeviceExists(string id)
         {
-            return _context.Devices.Any(e => e.UserId == id);
+            return _context.Devices.Any(e => e.DeviceGuid == id);
         }
     }
 }

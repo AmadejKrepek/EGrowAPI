@@ -7,7 +7,7 @@ namespace Models
     public class Device
     {
         [Key]
-        public Guid UserId { get; set; }
+        public string DeviceGuid { get; set; }
         List<SensorData> sensors;
         Account account;
     }

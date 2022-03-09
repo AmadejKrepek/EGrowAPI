@@ -6,7 +6,7 @@ namespace Models
     public class Ebox
     {
         [Key]
-        public Guid Id { get; set; }
+        public string EboxGuid { get; set; }
 
     }
 }
