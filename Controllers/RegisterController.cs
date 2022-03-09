@@ -22,14 +22,26 @@ namespace EGrowAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> Register(User user)
+        public async Task<ActionResult<User>> Register(NewUser userRegister)
         {
-            var newEntity=_context.User.Add(user);
+            if (await _context.Users.AnyAsync(user => user.Username == userRegister.Username))
+            {
+                return BadRequest("Username is taken.");
+            }
+
+            var newUser = new User
+            {
+                Username = userRegister.Username,
+                Password = userRegister.Password,
+                UserGuid = Guid.NewGuid().ToString()
+            };
+
+            var newEntity = _context.Users.Add(newUser);
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException)
+            catch
             {
                 return BadRequest();
             }
