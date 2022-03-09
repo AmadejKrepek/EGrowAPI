@@ -7,6 +7,10 @@ namespace Database
     public class MySqlContext : DbContext
     {
         public DbSet<SensorData> SensorData { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Device> Devices { get; set; }
+        //public DbSet<Ebox> Ebox { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -12,47 +12,47 @@ namespace EGrowAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SensorController : ControllerBase
+    public class AccountController : ControllerBase
     {
         private readonly MySqlContext _context;
 
-        public SensorController(MySqlContext context)
+        public AccountController(MySqlContext context)
         {
             _context = context;
         }
 
-        // GET: api/Sensor
+        // GET: api/Account
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SensorData>>> GetSensorData()
+        public async Task<ActionResult<IEnumerable<Account>>> GetAccounts()
         {
-            return await _context.SensorData.ToListAsync();
+            return await _context.Accounts.ToListAsync();
         }
 
-        // GET: api/Sensor/5
+        // GET: api/Account/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<SensorData>> GetSensorData(Guid id)
+        public async Task<ActionResult<Account>> GetAccount(Guid id)
         {
-            var sensorData = await _context.SensorData.FindAsync(id);
+            var account = await _context.Accounts.FindAsync(id);
 
-            if (sensorData == null)
+            if (account == null)
             {
                 return NotFound();
             }
 
-            return sensorData;
+            return account;
         }
 
-        // PUT: api/Sensor/5
+        // PUT: api/Account/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSensorData(string id, SensorInput sensorData)
+        public async Task<IActionResult> PutAccount(Guid id, Account account)
         {
-            var newSensorData = sensorData.ToSensorData();
-            newSensorData.Id = Guid.Parse(id);
+            if (id != account.UserId)
+            {
+                return BadRequest();
+            }
 
-            _context.SensorData.Update(
-                newSensorData
-            );
+            _context.Entry(account).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace EGrowAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SensorDataExists(Guid.Parse(id)))
+                if (!AccountExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace EGrowAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Sensor
+        // POST: api/Account
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<SensorData>> PostSensorData(SensorInput sensorData)
+        public async Task<ActionResult<Account>> PostAccount(Account account)
         {
-            _context.SensorData.Add(sensorData.ToSensorData());
+            _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return CreatedAtAction("GetAccount", new { id = account.UserId }, account);
         }
 
-        // DELETE: api/Sensor/5
+        // DELETE: api/Account/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSensorData(Guid id)
+        public async Task<IActionResult> DeleteAccount(Guid id)
         {
-            var sensorData = await _context.SensorData.FindAsync(id);
-            if (sensorData == null)
+            var account = await _context.Accounts.FindAsync(id);
+            if (account == null)
             {
                 return NotFound();
             }
 
-            _context.SensorData.Remove(sensorData);
+            _context.Accounts.Remove(account);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool SensorDataExists(Guid id)
+        private bool AccountExists(Guid id)
         {
-            return _context.SensorData.Any(e => e.Id == id);
+            return _context.Accounts.Any(e => e.UserId == id);
         }
     }
 }

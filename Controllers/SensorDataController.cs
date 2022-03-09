@@ -12,47 +12,47 @@ namespace EGrowAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class SensorDataController : ControllerBase
     {
         private readonly MySqlContext _context;
 
-        public UserController(MySqlContext context)
+        public SensorDataController(MySqlContext context)
         {
             _context = context;
         }
 
-        // GET: api/User
+        // GET: api/SensorData
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<SensorData>>> GetSensorData()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.SensorData.ToListAsync();
         }
 
-        // GET: api/User/5
+        // GET: api/SensorData/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(Guid id)
+        public async Task<ActionResult<SensorData>> GetSensorData(Guid id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var sensorData = await _context.SensorData.FindAsync(id);
 
-            if (user == null)
+            if (sensorData == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return sensorData;
         }
 
-        // PUT: api/User/5
+        // PUT: api/SensorData/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(Guid id, User user)
+        public async Task<IActionResult> PutSensorData(Guid id, SensorData sensorData)
         {
-            if (id != user.UserId)
+            if (id != sensorData.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(sensorData).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace EGrowAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!SensorDataExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace EGrowAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/User
+        // POST: api/SensorData
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<SensorData>> PostSensorData(SensorData sensorData)
         {
-            _context.Users.Add(user);
+            _context.SensorData.Add(sensorData);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+            return CreatedAtAction("GetSensorData", new { id = sensorData.Id }, sensorData);
         }
 
-        // DELETE: api/User/5
+        // DELETE: api/SensorData/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(Guid id)
+        public async Task<IActionResult> DeleteSensorData(Guid id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var sensorData = await _context.SensorData.FindAsync(id);
+            if (sensorData == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
+            _context.SensorData.Remove(sensorData);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool UserExists(Guid id)
+        private bool SensorDataExists(Guid id)
         {
-            return _context.Users.Any(e => e.UserId == id);
+            return _context.SensorData.Any(e => e.Id == id);
         }
     }
 }

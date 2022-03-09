@@ -12,47 +12,47 @@ namespace EGrowAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class DeviceController : ControllerBase
     {
         private readonly MySqlContext _context;
 
-        public UserController(MySqlContext context)
+        public DeviceController(MySqlContext context)
         {
             _context = context;
         }
 
-        // GET: api/User
+        // GET: api/Device
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<Device>>> GetDevices()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Devices.ToListAsync();
         }
 
-        // GET: api/User/5
+        // GET: api/Device/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(Guid id)
+        public async Task<ActionResult<Device>> GetDevice(Guid id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var device = await _context.Devices.FindAsync(id);
 
-            if (user == null)
+            if (device == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return device;
         }
 
-        // PUT: api/User/5
+        // PUT: api/Device/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(Guid id, User user)
+        public async Task<IActionResult> PutDevice(Guid id, Device device)
         {
-            if (id != user.UserId)
+            if (id != device.UserId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(device).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace EGrowAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!DeviceExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace EGrowAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/User
+        // POST: api/Device
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<Device>> PostDevice(Device device)
         {
-            _context.Users.Add(user);
+            _context.Devices.Add(device);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+            return CreatedAtAction("GetDevice", new { id = device.UserId }, device);
         }
 
-        // DELETE: api/User/5
+        // DELETE: api/Device/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(Guid id)
+        public async Task<IActionResult> DeleteDevice(Guid id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var device = await _context.Devices.FindAsync(id);
+            if (device == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
+            _context.Devices.Remove(device);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool UserExists(Guid id)
+        private bool DeviceExists(Guid id)
         {
-            return _context.Users.Any(e => e.UserId == id);
+            return _context.Devices.Any(e => e.UserId == id);
         }
     }
 }
