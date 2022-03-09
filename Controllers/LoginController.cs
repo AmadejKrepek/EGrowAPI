@@ -29,7 +29,10 @@ namespace EGrowAPI.Controllers
 
                 if (foundUser.Password == loginUser.Password)
                 {
-                    foundUser.Password="";
+                    await _context.Entry(foundUser)
+                    .Collection(user => user.Devices)
+                    .LoadAsync();
+                    foundUser.Password = "";
                     return Ok(foundUser);
                 }
                 else
@@ -42,6 +45,5 @@ namespace EGrowAPI.Controllers
                 return BadRequest();
             }
         }
-
     }
 }

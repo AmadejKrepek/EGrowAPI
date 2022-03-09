@@ -10,6 +10,6 @@ namespace Models
         public string UserGuid { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        List<Device> Devices { get; set; }
+        public List<Device> Devices { get; set; }
     }
 }
