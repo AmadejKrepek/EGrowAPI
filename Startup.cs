@@ -1,3 +1,4 @@
+using Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +33,7 @@ namespace EGrowAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EGrowAPI", Version = "v1" });
             });
+            services.AddTransient<MySqlContext,MySqlContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

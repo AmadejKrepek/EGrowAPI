@@ -6,6 +6,6 @@ namespace Model
     public class Growth
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }
