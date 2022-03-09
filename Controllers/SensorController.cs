@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Database;
-using Model;
+using Models;
 
 namespace EGrowAPI.Controllers
 {

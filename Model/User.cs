@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EGrowAPI.Models
+namespace Models
 {
     public class User
     {
