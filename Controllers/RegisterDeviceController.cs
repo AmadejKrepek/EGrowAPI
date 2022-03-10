@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Database;
 using Models;
+using System.Text.Json;
 
 namespace EGrowAPI.Controllers
 {
@@ -21,24 +22,26 @@ namespace EGrowAPI.Controllers
             _context = context;
         }
         [HttpPost]
-        public async Task<ActionResult<User>> NewDevice(DeviceRegister newDevice)
+        public async Task<ActionResult<Device>> NewDevice(DeviceRegister newDevice)
         {
             try
             {
                 var foundUser = await _context.Users
+                .Include(user => user.Devices)
                 .SingleAsync(user => user.UserGuid == newDevice.UserGuid);
-                /*
-                await _context.Entry(foundUser)
-                .Collection(user => user.Devices)
-                .LoadAsync();
-                */
-                foundUser.Devices.Add(
-                    _context.Devices.Single(device => device.DeviceGuid == newDevice.DeviceGuid)
-                );
+
+                var foundDevice = await _context.Devices
+                .Include(device => device.SensorMeasurements)
+                .SingleAsync(device => device.DeviceGuid == newDevice.DeviceGuid);
+
+                foundDevice.DeviceRegisteredToUser = DateTime.Now;
+                foundDevice.User = foundUser;
+
+                _context.Devices.Update(foundDevice);
 
                 await _context.SaveChangesAsync();
 
-                return Ok(foundUser.Devices);
+                return Ok();
             }
             catch
             {

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Database;
 using Models;
+using Utility;
 
 namespace EGrowAPI.Controllers
 {
@@ -32,9 +33,14 @@ namespace EGrowAPI.Controllers
                     await _context.Entry(foundUser)
                     .Collection(user => user.Devices)
                     .LoadAsync();
+                    
+                    foundUser.UserGuid = Utils.SafeRandomNumber();
+                    _context.Update(foundUser);
+                    await _context.SaveChangesAsync();
+
                     foundUser.Password = "";
 
-                    this.Response.Cookies.Append("token",foundUser.UserGuid);
+                    this.Response.Cookies.Append("token", foundUser.UserGuid);
                     return Ok(foundUser);
                 }
                 else

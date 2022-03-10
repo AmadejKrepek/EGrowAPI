@@ -27,12 +27,13 @@ namespace EGrowAPI.Controllers
 
             for (int number = 0; number < amountOfNewDevices; number++)
             {
-                newDevices.Add(new Device { DeviceGuid = Guid.NewGuid().ToString() });
+                newDevices.Add(new Device { DeviceGuid = Guid.NewGuid().ToString(), DeviceManufactured = DateTime.Now });
             }
             try
             {
                 await _context.AddRangeAsync(newDevices);
                 await _context.SaveChangesAsync();
+
                 return Ok(newDevices);
             }
             catch
