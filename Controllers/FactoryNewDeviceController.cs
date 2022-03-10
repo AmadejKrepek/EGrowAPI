@@ -20,6 +20,7 @@ namespace EGrowAPI.Controllers
         {
             _context = context;
         }
+        
         [HttpPost]
         public async Task<ActionResult<List<Device>>> NewDevice(int amountOfNewDevices)
         {
