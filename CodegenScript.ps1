@@ -1,13 +1,4 @@
 dotnet-aspnet-codegenerator controller `
--name AccountController `
--m Account `
--dc MySqlContext `
---relativeFolderPath Controllers `
---useDefaultLayout `
---referenceScriptLibraries `
---restWithNoViews
-
-dotnet-aspnet-codegenerator controller `
 -name DeviceController `
 -m Device `
 -dc MySqlContext `

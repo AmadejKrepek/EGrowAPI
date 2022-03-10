@@ -7,6 +7,8 @@ namespace Models
     {
         [Key]
         public string SensorDataGuid { get; set; }
+        public string PlantName { get; set; }
+        public string PlantType { get; set; }
         public DateTime Timestamp { get; set; }
         public double SoilTemperatureCelsius { get; set; }
         public double AmbientTemperatureCelsius { get; set; }
@@ -21,6 +23,8 @@ namespace Models
 
     public class SensorInput
     {
+        public string PlantName { get; set; }
+        public string PlantType { get; set; }
         public string IsoDateTimeString { get; set; }
         public double SoilTemperatureCelsius { get; set; }
         public double AmbientTemperatureCelsius { get; set; }
@@ -35,7 +39,9 @@ namespace Models
         {
             return new SensorData
             {
-                SensorDataGuid=Guid.NewGuid().ToString(),
+                SensorDataGuid = Guid.NewGuid().ToString(),
+                PlantName = this.PlantName,
+                PlantType = this.PlantType,
                 Timestamp = DateTime.Parse(this.IsoDateTimeString),
                 SoilTemperatureCelsius = this.SoilTemperatureCelsius,
                 AmbientTemperatureCelsius = this.AmbientTemperatureCelsius,

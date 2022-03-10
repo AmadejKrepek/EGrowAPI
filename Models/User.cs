@@ -11,5 +11,6 @@ namespace Models
         public string Username { get; set; }
         public string Password { get; set; }
         public List<Device> Devices { get; set; }
+        public DateTime UserRegistration { get; set; }
     }
 }

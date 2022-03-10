@@ -31,6 +31,7 @@ namespace EGrowAPI.Controllers
 
             var newUser = new User
             {
+                UserRegistration = DateTime.Now,
                 Username = userRegister.Username,
                 Password = userRegister.Password,
                 UserGuid = Guid.NewGuid().ToString()

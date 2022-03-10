@@ -33,6 +33,8 @@ namespace EGrowAPI.Controllers
                     .Collection(user => user.Devices)
                     .LoadAsync();
                     foundUser.Password = "";
+
+                    this.Response.Cookies.Append("token",foundUser.UserGuid);
                     return Ok(foundUser);
                 }
                 else

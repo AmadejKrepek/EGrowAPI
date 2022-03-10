@@ -8,7 +8,8 @@ namespace Models
     {
         [Key]
         public string DeviceGuid { get; set; }
-        List<SensorData> Sensors;
-        User User;
+        public List<SensorData> SensorMeasurements { get; set; }
+        public User User { get; set; }
+
     }
 }
