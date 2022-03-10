@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Models
 {
@@ -16,6 +17,7 @@ namespace Models
         public DateTime DeviceManufactured { get; set; }
         public DateTime DeviceRegisteredToUser { get; set; }
         public List<SensorData> SensorMeasurements { get; set; }
+        [JsonIgnore]
         public User User { get; set; }
     }
 }

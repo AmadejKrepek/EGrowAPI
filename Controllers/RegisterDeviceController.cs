@@ -41,7 +41,7 @@ namespace EGrowAPI.Controllers
 
                 await _context.SaveChangesAsync();
 
-                return Ok();
+                return Ok(foundDevice);
             }
             catch
             {

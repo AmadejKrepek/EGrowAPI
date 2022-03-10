@@ -27,11 +27,10 @@ namespace EGrowAPI.Controllers
             {
                 var foundUser = await _context.Users.SingleAsync(user => user.UserGuid == userGuid);
 
-                await _context.Entry(foundUser)
-                .Collection(user => user.Devices)
-                .LoadAsync();
-                foundUser.Password = "";
-                return Ok(foundUser);
+                var results=_context.Devices.Include(device => device.SensorMeasurements)
+                .Where(device => device.User.UserGuid == userGuid);
+
+                return Ok(results);
             }
             catch
             {

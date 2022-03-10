@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Models
 {
@@ -21,6 +22,7 @@ namespace Models
         public int OptimalSoilHumidityPercentage { get; set; }
         public int FullyGrownCm { get; set; }
         public int SensorDataId { get; set; }
+        [JsonIgnore]
         public SensorData SensorMeasurement { get; set; }
     }
 }

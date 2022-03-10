@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Models
 {
@@ -16,7 +17,9 @@ namespace Models
         public int AmbientHumidityPercentage { get; set; }
         public int SoilHumidityPercentage { get; set; }
         public int GrowthCm { get; set; }
+        [JsonIgnore]
         public Device Device { get; set; }
+        [JsonIgnore]
         public Plant Plant { get; set; }
     }
 
