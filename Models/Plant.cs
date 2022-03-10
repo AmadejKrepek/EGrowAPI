@@ -20,7 +20,7 @@ namespace Models
         public int OptimalAmbientHumidityPercentage { get; set; }
         public int OptimalSoilHumidityPercentage { get; set; }
         public int FullyGrownCm { get; set; }
-        public Device Device { get; set; }
+        public int SensorDataId { get; set; }
         public SensorData SensorMeasurement { get; set; }
     }
 }

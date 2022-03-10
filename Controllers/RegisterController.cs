@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Database;
 using Models;
+using System.Security.Cryptography;
 
 namespace EGrowAPI.Controllers
 {
@@ -28,13 +29,16 @@ namespace EGrowAPI.Controllers
             {
                 return BadRequest("Username is taken.");
             }
+            byte[] randomBytes = new byte[32];
+            RandomNumberGenerator.Fill(randomBytes);
 
             var newUser = new User
             {
                 UserRegistration = DateTime.Now,
                 Username = userRegister.Username,
                 Password = userRegister.Password,
-                UserGuid = Guid.NewGuid().ToString()
+                Email = userRegister.Email,
+                UserGuid = Convert.ToHexString(randomBytes)
             };
 
             var newEntity = _context.Users.Add(newUser);
