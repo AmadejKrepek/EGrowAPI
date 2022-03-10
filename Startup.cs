@@ -51,7 +51,7 @@ namespace EGrowAPI
                     Description = "API for eGrow - automated plant growing service. Developed with love and care for a school project.\nDeveloped by: Filip Strajnar, Amadej Krepek, Martin Ferenec, Tim Zupanc, Peter Pecl, Nejc Tevè, Žiga Brglez",
                     Contact = new OpenApiContact
                     {
-                        Name = "Martin Ferenec",
+                        Name = "Martin Ferenec (support, developer)",
                         Email = "martin.ferenec@student.um.si"
                     },
                     License = new OpenApiLicense
