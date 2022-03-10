@@ -10,6 +10,8 @@ namespace Models
         public string DeviceGuid { get; set; }
         public List<SensorData> SensorMeasurements { get; set; }
         public User User { get; set; }
-
+        public Plant CurrentPlant { get; set; }
+        public int WaterTankLevel { get; set; }
+        public int FertilizerLevel { get; set; }
     }
 }
