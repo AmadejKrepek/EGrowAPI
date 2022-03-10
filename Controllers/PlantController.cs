@@ -12,47 +12,47 @@ namespace EGrowAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class PlantController : ControllerBase
     {
         private readonly MySqlContext _context;
 
-        public UserController(MySqlContext context)
+        public PlantController(MySqlContext context)
         {
             _context = context;
         }
 
-        // GET: api/User
+        // GET: api/Plant
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<Plant>>> GetPlant()
         {
-            return await _context.Users.Include(user => user.Devices).ToListAsync();
+            return await _context.Plant.ToListAsync();
         }
 
-        // GET: api/User/5
+        // GET: api/Plant/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<Plant>> GetPlant(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var plant = await _context.Plant.FindAsync(id);
 
-            if (user == null)
+            if (plant == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return plant;
         }
 
-        // PUT: api/User/5
+        // PUT: api/Plant/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutPlant(int id, Plant plant)
         {
-            if (id != user.UserId)
+            if (id != plant.PlantId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(plant).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace EGrowAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!PlantExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace EGrowAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/User
+        // POST: api/Plant
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<Plant>> PostPlant(Plant plant)
         {
-            _context.Users.Add(user);
+            _context.Plant.Add(plant);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+            return CreatedAtAction("GetPlant", new { id = plant.PlantId }, plant);
         }
 
-        // DELETE: api/User/5
+        // DELETE: api/Plant/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeletePlant(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var plant = await _context.Plant.FindAsync(id);
+            if (plant == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
+            _context.Plant.Remove(plant);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool UserExists(int id)
+        private bool PlantExists(int id)
         {
-            return _context.Users.Any(e => e.UserId == id);
+            return _context.Plant.Any(e => e.PlantId == id);
         }
     }
 }

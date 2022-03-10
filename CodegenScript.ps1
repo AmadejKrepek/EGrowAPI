@@ -24,3 +24,12 @@ dotnet-aspnet-codegenerator controller `
 --useDefaultLayout `
 --referenceScriptLibraries `
 --restWithNoViews
+
+dotnet-aspnet-codegenerator controller `
+-name PlantController `
+-m Plant `
+-dc MySqlContext `
+--relativeFolderPath Controllers `
+--useDefaultLayout `
+--referenceScriptLibraries `
+--restWithNoViews

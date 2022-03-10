@@ -25,7 +25,7 @@ namespace EGrowAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Device>>> GetDevices()
         {
-            return await _context.Devices.ToListAsync();
+            return await _context.Devices.Include(device => device.SensorMeasurements).ToListAsync();
         }
 
         // GET: api/Device/5
