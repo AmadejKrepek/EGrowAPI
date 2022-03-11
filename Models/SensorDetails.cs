@@ -14,7 +14,8 @@ namespace Models
         public int AmbientHumidityPercentage { get; set; }
         public int SoilHumidityPercentage { get; set; }
         public int GrowthCm { get; set; }
-        public Device Device { get; set; }
+        public string DeviceGuid { get; set; }
+        public int DeviceId { get; set; }
         public Plant Plant { get; set; }
     }
 }

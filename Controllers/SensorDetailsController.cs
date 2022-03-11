@@ -41,7 +41,8 @@ namespace EGrowAPI.Controllers
                 details.AmbientHumidityPercentage = foundData.AmbientHumidityPercentage;
                 details.SoilHumidityPercentage = foundData.SoilHumidityPercentage;
                 details.GrowthCm = foundData.GrowthCm;
-                details.Device = foundData.Device;
+                details.DeviceId = foundData.Device.DeviceId;
+                details.DeviceGuid = foundData.Device.DeviceGuid;
                 details.Plant = foundData.Plant;
 
                 return Ok(details);
