@@ -10,7 +10,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace EGrowAPI
@@ -42,7 +44,25 @@ namespace EGrowAPI
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "EGrowAPI", Version = "v1" });
+                c.SwaggerDoc("v1.0", new OpenApiInfo
+                {
+                    Title = "eGrow API",
+                    Version = "v1.0",
+                    Description = "API for eGrow - automated plant growing service. Developed with love and care for a school project.\nDeveloped by: Filip Strajnar, Amadej Krepek, Martin Ferenec, Tim Zupanc, Peter Pecl, Nejc Tevè, Žiga Brglez",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Martin Ferenec (support, developer)",
+                        Email = "martin.ferenec@student.um.si"
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "MIT licenca",
+                        Url = new Uri("https://opensource.org/licenses/MIT")
+                    }
+                });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
             services.AddTransient<MySqlContext,MySqlContext>();
         }
@@ -53,9 +73,10 @@ namespace EGrowAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "EGrowAPI v1"));
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "eGrow API v1.0"));
 
             app.UseHttpsRedirection();
 
