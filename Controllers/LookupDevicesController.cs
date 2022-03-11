@@ -27,7 +27,9 @@ namespace EGrowAPI.Controllers
             {
                 var foundUser = await _context.Users.SingleAsync(user => user.UserGuid == userGuid);
 
-                var results=_context.Devices.Include(device => device.SensorMeasurements)
+                var results = _context.Devices
+                .Include(device => device.SensorMeasurements)
+                .ThenInclude(data => data.Plant)
                 .Where(device => device.User.UserGuid == userGuid);
 
                 return Ok(results);

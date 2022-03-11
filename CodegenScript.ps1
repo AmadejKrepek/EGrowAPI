@@ -33,3 +33,11 @@ dotnet-aspnet-codegenerator controller `
 --useDefaultLayout `
 --referenceScriptLibraries `
 --restWithNoViews
+
+
+# New API endpoint
+dotnet-aspnet-codegenerator controller `
+-name SensorDetailsController `
+-dc MySqlContext `
+--relativeFolderPath Controllers `
+--restWithNoViews
