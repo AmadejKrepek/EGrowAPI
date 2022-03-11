@@ -8,6 +8,7 @@ namespace Models
 {
     public class UpdateDevice
     {
+        public string UserGuid { get; set; }
         public string DeviceGuid { get; set; }
         public int WaterTankLevel { get; set; }
         public int FertilizerLevel { get; set; }

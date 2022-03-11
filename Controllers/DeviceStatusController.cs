@@ -6,6 +6,7 @@ using Database;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EGrowAPI.Controllers
 {
@@ -25,7 +26,15 @@ namespace EGrowAPI.Controllers
         {
             try
             {
-                var foundDevice = _context.Devices.Single(device => device.DeviceGuid == deviceUpdate.DeviceGuid);
+                var foundDevice = await _context.Devices
+                .Include(device => device.User)
+                .SingleAsync(device => device.DeviceGuid == deviceUpdate.DeviceGuid);
+
+                if (foundDevice.User.UserGuid != deviceUpdate.UserGuid)
+                {
+                    return Unauthorized();
+                }
+
                 foundDevice.WaterTankLevel = deviceUpdate.WaterTankLevel;
                 foundDevice.FertilizerLevel = deviceUpdate.FertilizerLevel;
                 foundDevice.HasError = deviceUpdate.HasError;
