@@ -21,6 +21,13 @@ namespace EGrowAPI.Controllers
         {
             _context = context;
         }
+        /// <summary>
+        /// Registracija eGrow naprave k uporabniškem raèunu
+        /// </summary>
+        /// <param name="newDevice">Objekt DeviceRegister</param>
+        /// <returns>Objekt Device s podatki</returns>
+        /// <response code="200">Naprava uspešno registrirana k uporabniškemu raèunu.</response>
+        /// <response code="400">Napaka pri registraciji naprave k uporabniškemu raèunu. Kontaktiraj support.</response>
         [HttpPost]
         public async Task<ActionResult<Device>> NewDevice(DeviceRegister newDevice)
         {

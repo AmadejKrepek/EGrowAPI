@@ -22,12 +22,20 @@ namespace EGrowAPI.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Registracija novega uporabnika eGrow storitve
+        /// </summary>
+        /// <param name="userRegister">Objekt s podatki o uporabniku</param>
+        /// <returns>Objekt s podatki registriranega uporabnika</returns>
+        /// <response code="200">Uporabniški raèun uspešno ustvarjen.</response>
+        /// <response code="409">Uporabnik s tem uporabniškim imenom že obstaja.</response>
+        /// <response code="400">Napaka pri ustvarjanju uporabniškega raèuna.</response>
         [HttpPost]
         public async Task<ActionResult<User>> Register(NewUser userRegister)
         {
             if (await _context.Users.AnyAsync(user => user.Username == userRegister.Username))
             {
-                return BadRequest("Username is taken.");
+                return Conflict("Username is taken.");
             }
 
 

@@ -20,7 +20,14 @@ namespace EGrowAPI.Controllers
         {
             _context = context;
         }
-        
+
+        /// <summary>
+        /// Ustvarjanje nove eGrow naprave. Namenjeno proizvodnji naprave, da pridobijo GUID.
+        /// </summary>
+        /// <param name="amountOfNewDevices">Število naprav, kolikor jih želimo ustvariti</param>
+        /// <returns>Seznam naprav, ki so bile novo ustvarjene.</returns>
+        /// <response code="200">Naprave uspešno ustvarjene in izpisane.</response>
+        /// <response code="400">Prišlo je do napake pri ustvarjanju novih naprav. Glej povratno informacijo.</response>
         [HttpPost]
         public async Task<ActionResult<List<Device>>> NewDevice(int amountOfNewDevices)
         {
@@ -37,9 +44,9 @@ namespace EGrowAPI.Controllers
 
                 return Ok(newDevices);
             }
-            catch
+            catch(Exception ex)
             {
-                return BadRequest("Failed to make new devices.");
+                return BadRequest($"Failed to make new devices. Error message: {ex.Message}");
             }
         }
     }

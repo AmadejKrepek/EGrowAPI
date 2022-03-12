@@ -21,6 +21,14 @@ namespace EGrowAPI.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Posodabljanje stanja eGrow naprave. Pod to spadajo: kolièina razpoložljive vode in gnojila, ter podatki o morebitni trenutni napaki na strojni opremi eGrow.
+        /// </summary>
+        /// <param name="deviceUpdate">Objekt DeviceUpdate</param>
+        /// <returns></returns>
+        /// <response code="200">Podatki naprave uspešno posodobljeni.</response>
+        /// <response code="400">Podatkov naprave, ni bilo možno posodobiti.</response>
+        /// <response code="401">Ta naprava ne pripada uporabniku, ki ji posodablja podatke.</response>
         [HttpPut]
         public async Task<ActionResult<List<Device>>> UpdateDeviceStatus(UpdateDevice deviceUpdate)
         {
@@ -45,9 +53,9 @@ namespace EGrowAPI.Controllers
 
                 return Ok(foundDevice);
             }
-            catch
+            catch(Exception ex)
             {
-                return BadRequest("Device status was not updated.");
+                return BadRequest($"Device status was not updated. Error message: {ex.Message}");
             }
         }
 

@@ -10,6 +10,11 @@ using Models;
 
 namespace EGrowAPI.Controllers
 {
+    /// <summary>
+    /// !!! ADMIN ONLY !!!
+    /// 
+    /// Ne uporabljaj te funkcionalnosti na front-end ali pa simulatorju!
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class SensorDataController : ControllerBase
@@ -22,6 +27,10 @@ namespace EGrowAPI.Controllers
         }
 
         // GET: api/SensorData
+        /// <summary>
+        /// Pridobi popolnoma vse meritve eGrow naprav v sistemu
+        /// </summary>
+        /// <returns>Seznam vseh meritev v sistemu (SensorData)</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SensorData>>> GetSensorData()
         {
@@ -29,6 +38,13 @@ namespace EGrowAPI.Controllers
         }
 
         // GET: api/SensorData/5
+        /// <summary>
+        /// Pridobi doloèeno meritev po njeni ID številki
+        /// </summary>
+        /// <param name="id">SensorDataId številka</param>
+        /// <returns>Najdena meritev (SensorData)</returns>
+        /// <response code="204">Podatki meritve uspešno izpisani.</response>
+        /// <response code="404">Meritev s tem SensorDataId ne obstaja.</response>
         [HttpGet("{id}")]
         public async Task<ActionResult<SensorData>> GetSensorData(int id)
         {
@@ -39,11 +55,21 @@ namespace EGrowAPI.Controllers
                 return NotFound();
             }
 
-            return sensorData;
+            return Ok(sensorData);
         }
 
         // PUT: api/SensorData/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Spreminjanje podatkov meritve
+        /// </summary>
+        /// <param name="id">SensorDataId meritve</param>
+        /// <param name="sensorData">Posodovljen objekt SensorData</param>
+        /// <returns></returns>
+        /// <response code="204">Podatki meritve uspešno spremenjeni.</response>
+        /// <response code="404">Meritev s tem SensorDataId ne obstaja.</response>
+        /// <response code="400">"id" in field "SensorDataId" v ojbektu "SensorData" se ne ujemata.</response>
+        /// <response code="500">Neprièakovana napaka. Kontaktirajte support.</response>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSensorData(int id, SensorData sensorData)
         {
@@ -66,7 +92,7 @@ namespace EGrowAPI.Controllers
                 }
                 else
                 {
-                    throw;
+                    return new ObjectResult("Neprièakovana napaka") { StatusCode = 500 };
                 }
             }
 
@@ -75,6 +101,12 @@ namespace EGrowAPI.Controllers
 
         // POST: api/SensorData
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Dodajanje nove meritve
+        /// </summary>
+        /// <param name="sensorData">SensorData s podatki o meritvi</param>
+        /// <returns>Vnesen objekt SensorData s podatki</returns>
+        /// <response code="201">Meritev uspešno dodana in izpisana.</response>
         [HttpPost]
         public async Task<ActionResult<SensorData>> PostSensorData(SensorData sensorData)
         {
@@ -85,6 +117,13 @@ namespace EGrowAPI.Controllers
         }
 
         // DELETE: api/SensorData/5
+        /// <summary>
+        /// Brisanje meritve iz sistema
+        /// </summary>
+        /// <param name="id">SensorDataId meritve</param>
+        /// <returns></returns>
+        /// <response code="204">Meritev uspešno izbrisana iz sistema.</response>
+        /// <response code="404">Meritev s tem SensorDataId ne obstaja.</response>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSensorData(int id)
         {

@@ -20,8 +20,16 @@ namespace EGrowAPI.Controllers
         {
             _context = context;
         }
+
+        /// <summary>
+        /// Izpis vseh eGrow naprav nekega uporabnika
+        /// </summary>
+        /// <param name="userGuid">UserGuid uporabnika</param>
+        /// <returns>Seznam naprav nekega uporabnika</returns>
+        /// <response code="200">Naprave uporabnika uspešno izpisane.</response>
+        /// <response code="400">Napaka pri pridobivanju naprav.</response>
         [HttpGet]
-        public async Task<ActionResult<User>> LookupDevices(string userGuid)
+        public async Task<ActionResult<Device>> LookupDevices(string userGuid)
         {
             try
             {

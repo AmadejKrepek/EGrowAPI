@@ -21,6 +21,15 @@ namespace EGrowAPI.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Pridobivanje zadnje meritve neke naprave
+        /// </summary>
+        /// <param name="deviceGuid">GUID naprave od katere želimo pridobiti podatke</param>
+        /// <param name="userGuid">GUID uporabnika, ki želi pridobiti podatke</param>
+        /// <returns>Objekt "DisplaySensorData" s podatki</returns>
+        /// <response code="200">Meritev naprave uspešno vrnjena.</response>
+        /// <response code="400">Prišlo je do napake. Gled response.</response>
+        /// <response code="401">Ta naprava ne pripada uporabniku, ki želi pridobiti podatek.</response>
         [HttpGet]
         public async Task<ActionResult<List<DisplaySensorData>>> LatestData(string deviceGuid, string userGuid)
         {

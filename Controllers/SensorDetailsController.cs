@@ -20,6 +20,13 @@ namespace EGrowAPI.Controllers
         {
             _context = context;
         }
+
+        /// <summary>
+        /// NEEDS DOCUMENTING
+        /// </summary>
+        /// <param name="userGuid">GUID uporabnika</param>
+        /// <param name="sensorDataId">ID meritve</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<SensorDetail>> SensorDetail(string userGuid, int sensorDataId)
         {

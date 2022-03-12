@@ -10,6 +10,11 @@ using Models;
 
 namespace EGrowAPI.Controllers
 {
+    /// <summary>
+    /// !!! ADMIN ONLY !!!
+    /// 
+    /// Ne uporabljaj te funkcionalnosti na front-end ali pa simulatorju!
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class PlantController : ControllerBase
@@ -22,13 +27,25 @@ namespace EGrowAPI.Controllers
         }
 
         // GET: api/Plant
+        /// <summary>
+        /// Pridobivanje seznama vseh rastlin v sistemu
+        /// </summary>
+        /// <returns>Seznam vseh rastlin (Plant)</returns>
+        /// <response code="200">Seznam rastlin uspešno vrnjen.</response>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Plant>>> GetPlant()
         {
-            return await _context.Plant.ToListAsync();
+            return Ok(await _context.Plant.ToListAsync());
         }
 
         // GET: api/Plant/5
+        /// <summary>
+        /// Pridobivanje podatkov specifiène rastline po njeni ID številki
+        /// </summary>
+        /// <param name="id">ID rastline</param>
+        /// <returns>Objekt Plant s podatki o rastlini</returns>
+        /// <response code="200">Podatki rastline uspešno izpisani.</response>
+        /// <response code="404">Rastlina s tem ID ne obstaja.</response>
         [HttpGet("{id}")]
         public async Task<ActionResult<Plant>> GetPlant(int id)
         {
@@ -39,11 +56,21 @@ namespace EGrowAPI.Controllers
                 return NotFound();
             }
 
-            return plant;
+            return Ok(plant);
         }
 
         // PUT: api/Plant/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Posodabljanje podatkov o rastlini
+        /// </summary>
+        /// <param name="id">ID rastline, kateri želimo posodobiti podatke</param>
+        /// <param name="plant">Objekt Plant z novimi podatki o rastlini</param>
+        /// <returns></returns>
+        /// <response code="204">Podatki rastline uspešno spremenjeni.</response>
+        /// <response code="404">Rastlina s tem ID ne obstaja.</response>
+        /// <response code="400">"id" in field "PlantId" v ojbektu "plant" se ne ujemata.</response>
+        /// <response code="500">Neprièakovana napaka. Kontaktirajte support.</response>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPlant(int id, Plant plant)
         {
@@ -66,7 +93,7 @@ namespace EGrowAPI.Controllers
                 }
                 else
                 {
-                    throw;
+                    return new ObjectResult("Neprièakovana napaka") { StatusCode = 500 };
                 }
             }
 
@@ -75,6 +102,12 @@ namespace EGrowAPI.Controllers
 
         // POST: api/Plant
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Dodajanje nove rastline
+        /// </summary>
+        /// <param name="plant">Objekt nove rastline</param>
+        /// <returns>Objekt rastline, ki je bila dodana v sistem</returns>
+        /// <response code="201">Rastlina uspešno dodana v sistem.</response>
         [HttpPost]
         public async Task<ActionResult<Plant>> PostPlant(Plant plant)
         {
@@ -85,6 +118,13 @@ namespace EGrowAPI.Controllers
         }
 
         // DELETE: api/Plant/5
+        /// <summary>
+        /// Brisanje rastline iz sistema
+        /// </summary>
+        /// <param name="id">PlantId rastline, ki jo želimo izbrisati</param>
+        /// <returns></returns>
+        /// <response code="204">Rastlina uspešno odtsranjena.</response>
+        /// <response code="404">Rastlina s tem ID ne obstaja.</response>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePlant(int id)
         {
