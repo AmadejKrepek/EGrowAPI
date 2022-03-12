@@ -36,6 +36,11 @@ namespace EGrowAPI.Controllers
                 .ThenInclude(data => data.Plant)
                 .SingleAsync(device => device.SensorMeasurements.Any(data => data.SensorDataId == sensorDataId));
 
+                if (foundDevice.User.UserGuid != userGuid)
+                {
+                    return Unauthorized();
+                }
+
                 var foundData = foundDevice.SensorMeasurements.Single(data => data.SensorDataId == sensorDataId);
                 SensorDetail details = new SensorDetail();
                 details.SensorDataId = foundData.SensorDataId;
