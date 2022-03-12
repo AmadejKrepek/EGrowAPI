@@ -34,6 +34,7 @@ namespace EGrowAPI.Controllers
             {
                 var foundDevice = await _context.Devices.Include(device => device.SensorMeasurements)
                 .ThenInclude(data => data.Plant)
+                .Include(data => data.User)
                 .SingleAsync(device => device.SensorMeasurements.Any(data => data.SensorDataId == sensorDataId));
 
                 if (foundDevice.User.UserGuid != userGuid)
