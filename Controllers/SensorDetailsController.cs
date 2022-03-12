@@ -22,7 +22,9 @@ namespace EGrowAPI.Controllers
         }
 
         /// <summary>
-        /// NEEDS DOCUMENTING
+        /// Vrne detaljne podatke nekega zapisa senzorja. Kater zapis bo vrnjen je odločen
+        /// glede na sensorDataId. Odgovor bo prejel samo če je userGuid GUID uporabnika,
+        /// ki lasti napravo, ki ima ta zapis.
         /// </summary>
         /// <param name="userGuid">GUID uporabnika</param>
         /// <param name="sensorDataId">ID meritve</param>
