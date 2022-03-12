@@ -4,4 +4,6 @@ eGrow is an automated plant growing solution. User only needs to fill up the wat
 
 Happy growing! ~eGrow Team
 
-This is for a school porject. API returning dummy data. Not to be deployed in real-world scenario.
+Notice: This is for a school porject. API returning dummy data. Not to be deployed in real-world scenario.
+
+2022 FERI ITK-VS RIS 3.
