@@ -22,13 +22,16 @@ namespace EGrowAPI.Controllers
         }
 
         /// <summary>
-        /// Vrne detaljne podatke nekega zapisa senzorja. Kater zapis bo vrnjen je odločen
+        /// Vrne podrobne podatke nekega zapisa senzorja. Kater zapis bo vrnjen je odločen
         /// glede na sensorDataId. Odgovor bo prejel samo če je userGuid GUID uporabnika,
         /// ki lasti napravo, ki ima ta zapis.
         /// </summary>
         /// <param name="userGuid">GUID uporabnika</param>
         /// <param name="sensorDataId">ID meritve</param>
-        /// <returns></returns>
+        /// <returns>Vrne objekt "SensorDetail" s podatki</returns>
+        /// <response code="200">SensorDetail objekt uspešno vrnjen.</response>
+        /// <response code="400">Nepričakovana napaka. Preveri podatke ali kontaktiraj support.</response>
+        /// <response code="401">Meritev, katera želi biti spremenjena ne pripada uporabniku, ki jo spreminja.</response>
         [HttpGet]
         public async Task<ActionResult<SensorDetail>> SensorDetail(string userGuid, int sensorDataId)
         {
